@@ -6,8 +6,34 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '再入荷',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
+  },
+
+  restocking: {
+    title: '再入荷プランナー',
+    budget: '利用可能予算',
+    budgetHelp: 'スライダーで再入荷予算を設定してください。推奨事項が自動的に更新されます。',
+    itemsSelected: 'アイテム選択済み',
+    budgetUsed: '予算使用済み',
+    remaining: '残り',
+    placeOrder: '再入荷注文を発注',
+    placing: '注文中...',
+    successTitle: '注文完了',
+    successMessage: '再入荷注文が発注されました。14日以内にお届けします。',
+    viewOrders: '注文タブで確認',
+    placeAnother: '別の注文を発注',
+    noItems: '現在のフィルターに一致するアイテムがありません。',
+    sku: 'SKU',
+    item: 'アイテム',
+    trend: 'トレンド',
+    gapQty: '不足数量',
+    unitCost: '単価',
+    totalCost: '合計費用',
+    include: '含む',
+    warehouse: '倉庫',
+    allWarehouses: '全倉庫'
   },
 
   // Dashboard
@@ -106,6 +132,8 @@ export default {
     title: '注文',
     description: '顧客注文の表示と管理',
     allOrders: 'すべての注文',
+    submittedOrders: '発注済み再入荷注文',
+    leadTime: '14日間のリードタイム',
     totalOrders: '総注文数',
     totalRevenue: '総収益',
     avgOrderValue: '平均注文額',

@@ -6,8 +6,34 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
+  },
+
+  restocking: {
+    title: 'Restocking Planner',
+    budget: 'Available Budget',
+    budgetHelp: 'Drag to set your restocking budget. Recommendations update automatically.',
+    itemsSelected: 'items selected',
+    budgetUsed: 'budget used',
+    remaining: 'remaining',
+    placeOrder: 'Place Restock Order',
+    placing: 'Placing Order...',
+    successTitle: 'Order Submitted',
+    successMessage: 'Your restocking order has been placed. Expected delivery in 14 days.',
+    viewOrders: 'View in Orders Tab',
+    placeAnother: 'Place Another Order',
+    noItems: 'No items match the current filters.',
+    sku: 'SKU',
+    item: 'Item',
+    trend: 'Trend',
+    gapQty: 'Gap Qty',
+    unitCost: 'Unit Cost',
+    totalCost: 'Total Cost',
+    include: 'Include',
+    warehouse: 'Warehouse',
+    allWarehouses: 'All Warehouses'
   },
 
   // Dashboard
@@ -106,6 +132,8 @@ export default {
     title: 'Orders',
     description: 'View and manage customer orders',
     allOrders: 'All Orders',
+    submittedOrders: 'Submitted Restocking Orders',
+    leadTime: '14-day lead time',
     totalOrders: 'Total Orders',
     totalRevenue: 'Total Revenue',
     avgOrderValue: 'Avg Order Value',
