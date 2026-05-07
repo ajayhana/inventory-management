@@ -27,9 +27,53 @@
         </div>
       </div>
 
+      <!-- Submitted Restocking Orders section -->
+      <div v-if="submittedOrders.length > 0" class="card submitted-orders-card">
+        <div class="card-header submitted-card-header">
+          <h3 class="card-title">{{ t('orders.submittedOrders') }}</h3>
+          <span class="lead-time-badge">{{ t('orders.leadTime') }}</span>
+        </div>
+        <div class="table-container">
+          <table class="submitted-table">
+            <thead>
+              <tr>
+                <th>{{ t('orders.table.orderNumber') }}</th>
+                <th>{{ t('orders.table.items') }}</th>
+                <th>{{ t('orders.table.orderDate') }}</th>
+                <th>{{ t('orders.table.expectedDelivery') }}</th>
+                <th>{{ t('orders.table.totalValue') }}</th>
+                <th>{{ t('orders.table.status') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="order in submittedOrders" :key="order.id">
+                <td><strong>{{ order.order_number }}</strong></td>
+                <td>
+                  <details class="items-details">
+                    <summary class="items-summary">
+                      {{ t('orders.itemsCount', { count: order.items.length }) }}
+                    </summary>
+                    <div class="items-dropdown">
+                      <div v-for="(item, idx) in order.items" :key="idx" class="item-entry">
+                        <span class="item-name">{{ item.name }}</span>
+                        <span class="item-meta">{{ t('orders.quantity') }}: {{ item.quantity }} @ {{ currencySymbol }}{{ item.unit_price }}</span>
+                      </div>
+                    </div>
+                  </details>
+                </td>
+                <td>{{ formatDate(order.order_date) }}</td>
+                <td>{{ formatDate(order.expected_delivery) }}</td>
+                <td><strong>{{ currencySymbol }}{{ Math.round(order.total_value).toLocaleString() }}</strong></td>
+                <td><span class="badge submitted">Submitted</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">{{ t('orders.allOrders') }} ({{ orders.length }})</h3>
+          <h3 class="card-title">{{ t('orders.allOrders') }} ({{ customerOrders.length }})</h3>
         </div>
         <div class="table-container">
           <table class="orders-table">
@@ -45,7 +89,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="order in orders" :key="order.id">
+              <tr v-for="order in customerOrders" :key="order.id">
                 <td class="col-order-number"><strong>{{ order.order_number }}</strong></td>
                 <td class="col-customer">{{ translateCustomerName(order.customer) }}</td>
                 <td class="col-items">
@@ -95,6 +139,17 @@ export default {
     const loading = ref(true)
     const error = ref(null)
     const orders = ref([])
+
+    // Submitted restocking orders (internal, not customer orders)
+    const submittedOrders = computed(() =>
+      orders.value.filter(o => o.status === 'Submitted')
+        .sort((a, b) => new Date(b.order_date) - new Date(a.order_date))
+    )
+
+    // Regular customer orders (exclude Submitted)
+    const customerOrders = computed(() =>
+      orders.value.filter(o => o.status !== 'Submitted')
+    )
 
     // Use shared filters
     const {
@@ -160,6 +215,8 @@ export default {
       loading,
       error,
       orders,
+      submittedOrders,
+      customerOrders,
       getOrdersByStatus,
       getOrderStatusClass,
       formatDate,
@@ -275,5 +332,36 @@ export default {
 .item-meta {
   font-size: 0.813rem;
   color: #64748b;
+}
+
+/* Submitted restocking orders card */
+.submitted-orders-card {
+  border-left: 4px solid #8b5cf6; /* purple accent for restocking orders */
+}
+
+.submitted-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.submitted-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lead-time-badge {
+  font-size: 0.75rem;
+  background: #ede9fe;
+  color: #7c3aed;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+/* Badge for submitted status */
+.badge.submitted {
+  background: #ede9fe;
+  color: #7c3aed;
 }
 </style>
